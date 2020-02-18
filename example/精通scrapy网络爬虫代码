@@ -1,3 +1,5 @@
+《精通scrapy网络爬虫》第一章至第七章代码
+
 1.spiders 蜘蛛
 2.items.py 数据保存
 3.pipelines.py 数据处理
