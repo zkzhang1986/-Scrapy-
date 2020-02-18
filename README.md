@@ -1,5 +1,8 @@
-《精通scrapy网络爬虫》 example文件夹包含 第一章至第七章代码
+《精通scrapy网络爬虫》 
 
+##example文件夹内容： 第一章至第七章代码
+
+##practise文件夹内容：书本中的练习
 
 1.spiders 蜘蛛
 
