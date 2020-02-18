@@ -1,5 +1,5 @@
 # 《精通 scrapy 网络爬虫》第6章 第2节（即6.2）描述提取规则
-# 使用LinkExtract 提取链接
+# 使用LinkExtract 提取链接及参数介绍
 from scrapy.http import HtmlResponse
 from scrapy.linkextractors import LinkExtractor
 html1 = open('scrapyLinkExtractorTest1.html','r',encoding='utf-8').read()
@@ -81,7 +81,8 @@ print('html2_url_tags_attrs:',html2_url_tags_attrs)
 # 接收一个形如func(value)的回调函数。
 # 如果传递了该参数，LinkExtractor将调用该回调函数对提取的每一个链接（如a标签的href链接）进行处理，
 # 回调函数正常情况下应该返回一个字符串（处理结果），想要抛弃所处理结果的链接时，返回None。
-# 实例：
+# 实例：在页面example2.html中，某些a标签的href属性是一段JavaScript代码，代码中包含了链接页面的是实际url，
+# 此时应对链接进行处理，提取页面中example2.html中的所有实际链接
 import re
 def process(value):
     m = re.search("javascript:goToPage\('(.*?)'",value)
