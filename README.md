@@ -1,8 +1,8 @@
 《精通scrapy网络爬虫》 example文件夹包含 第一章至第七章代码
 
 
-1.spiders 蜘蛛
-2.items.py 数据保存
+#1.spiders 蜘蛛
+#2.items.py 数据保存
 3.pipelines.py 数据处理
 4.settings.py 设置
 5.my_exporters.py 自定义的数据导出格式
