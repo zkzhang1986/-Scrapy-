@@ -23,7 +23,7 @@ scrapy crawl <spider> -o <file> --运行爬虫导出数据
 
 scrapy startproject <name> --创建一个爬虫项目
   
-scrapy genspider [options] name  domain --创建一个爬虫（在startproject里创建）
+scrapy genspider [options] < name />  < domain /> --创建一个爬虫（在startproject里创建）
 
 scrapy shell [url|file] --测试
 
