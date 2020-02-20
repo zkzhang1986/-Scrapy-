@@ -9,6 +9,7 @@
 
 步骤5：实现书籍页面的解析函数
 
+my_exporters.py 以excel格式导出的Exporter
 
 ---------
 小技巧：cd 用法 CD [/D] [drive:][path]
