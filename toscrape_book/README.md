@@ -1,3 +1,4 @@
+## 《精通scrapy网络爬虫》 第8章代码 
 步骤1：继承spider创建BooksSpider类（即创建爬虫）
 
 步骤2：为spider取名 
