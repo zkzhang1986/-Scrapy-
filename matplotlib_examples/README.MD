@@ -43,7 +43,7 @@ from scrapy.linkextractors import LinkExtractor
 feth(url) #crapy shell 分析中的回调函数，把url录入可以回调。
 
 提取下载url
-下载路径：< a class="reference download internal" download="" href="../../_downloads/4ee10f51bc70fd3964fb1b8b3f64d054/bar_stacked.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">bar_stacked.py</span></code></a>
+下载路径：< a class="reference download internal" download="" href="../../_downloads/4ee10f51bc70fd3964fb1b8b3f64d054/bar_stacked.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">bar_stacked.py</span></code>< /a>
 href = response.css('a.reference::attr(href)').extract_first()
 herf = response.css('a.reference.download.internal::attr(href)').extract_first()
 download_url = response.urljoin(href)
