@@ -8,6 +8,8 @@ toscrape_book 文件夹内容：第八章 代码（ps在原代码基础增加了
 
 matplotlib_examples 文件夹内容 ：第九章 案例中下载matplotlib网站文件
 
+so_image 文件夹内容：第9章 第二节 下载360图片 （为什么只下载到第一页呢？？？没实现翻页）
+
 1.spiders 蜘蛛
 
 2.items.py 数据保存
