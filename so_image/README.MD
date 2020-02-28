@@ -26,7 +26,7 @@ scrapy startproject so_image
 cd so_image
 scrapy genspdier imamges images.so.com
 tree /f
-
+~~~~
 D:.
 │  scrapy.cfg
 │
@@ -47,13 +47,15 @@ D:.
     └─__pycache__
             settings.cpython-36.pyc
             __init__.cpython-36.pyc
+~~~~
 
 02 配置 settings.py
 ITEM_PIPELINES = {
-   # 'so_image.pipelines.SoImagePipeline': 300,
     'scrapy.pipelines.images.ImagesPipeline': 1,
 }
-# 下载目录
+
+下载目录
+
 IMAGES_STORE = 'download_images'
 
 ----------
