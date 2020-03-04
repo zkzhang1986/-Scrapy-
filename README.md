@@ -10,6 +10,8 @@ matplotlib_examples 文件夹内容 ：第九章 案例中下载matplotlib网站
 
 so_image 文件夹内容：第9章 第二节 下载360图片 （为什么只下载到第一页呢？？？没实现翻页）
 
+scrapy_10 文件加内容：第10章 代码
+
 1.spiders 蜘蛛
 
 2.items.py 数据保存
