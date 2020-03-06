@@ -42,10 +42,18 @@ scrapy -h
 Use "scrapy <command> -h" to see more info about a command
 
 
-小技巧：cd 用法 CD [/D] [drive:][path]
+## 小技巧：
+
+cd 用法 CD [/D] [drive:][path]
 
 cd /d d:\project\toscrape_book
 
 cd toscrape_book\spiders
 
 使用 /D 开关，除了改变驱动器的当前目录之外， 还可改变当前驱动器。
+
+-----------------------
+url 过滤
+两种方法能够使 requests 不被过滤: 
+1. 在 allowed_domains 中加入 url 
+2. 在 scrapy.Request() 函数中将参数 dont_filter=True 设置为 True
