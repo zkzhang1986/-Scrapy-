@@ -83,3 +83,16 @@ class CaptchLoginSpider(scrapy.Spider):
         img.close()
 
         return captha
+
+    def get_captha_by_network(self,data):
+        # 平台识别
+        pass
+
+    def get_captha_by_user(self,data):
+        # 人工识别
+        img = Image.open(BytesIO(data))
+        img.show()
+        captha = input('请输入验证码：')
+        img.close()
+        return captha
+
