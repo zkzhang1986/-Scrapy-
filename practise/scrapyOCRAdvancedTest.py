@@ -14,7 +14,7 @@ with open('scraing.png', 'rb') as f:  # 以二进制读取本地图片
 #请求头
 headers = {
     # 'Authorization': 'APPCODE 你自己的AppCode',
-    'Authorization':'APPCODE 73b27e5fb65c4383b485153301dddcd8',
+    'Authorization':'APPCODE 73b27e5fb65c4383b485153301dddcd',
     'Content-Type': 'application/json; charset=UTF-8'
 }
 
