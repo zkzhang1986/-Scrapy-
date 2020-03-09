@@ -1,0 +1,209 @@
+#请求参数（Body）
+{
+  //图像数据：base64编码，要求base64编码后大小不超过4M，最短边至少15px，最长边最大4096px，支持jpg/png/bmp格式，和url参数只能同时存在一个
+  "img": "",
+  //图像url地址：图片完整URL，URL长度不超过1024字节，URL对应的图片base64编码后大小不超过4M，最短边至少15px，最长边最大4096px，支持jpg/png/bmp格式，和img参数只能同时存在一个
+  "url": "",
+  //是否需要识别结果中每一行的置信度，默认不需要。 true：需要 false：不需要
+  "prob": false,
+  //是否需要单字识别功能，默认不需要。 true：需要 false：不需要
+  "charInfo": false,
+  //是否需要自动旋转功能，默认不需要。 true：需要 false：不需要
+  "rotate": false,
+  //是否需要表格识别功能，默认不需要。 true：需要 false：不需要
+  "table": false,
+  //字块返回顺序，false表示从左往右，从上到下的顺序，true表示从上到下，从左往右的顺序，默认false
+  "sortPage": false
+}
+
+#请求示例
+#python2
+import urllib, urllib2, sys
+import ssl
+
+
+host = 'https://ocrapi-advanced.taobao.com'
+path = '/ocrservice/advanced'
+method = 'POST'
+appcode = '你自己的AppCode'
+querys = ''
+bodys = {}
+url = host + path
+
+bodys[''] = "{\"img\":\"\",\"url\":\"\",\"prob\":false,\"charInfo\":false,\"rotate\":false,\"table\":false}"
+post_data = bodys['']
+request = urllib2.Request(url, post_data)
+request.add_header('Authorization', 'APPCODE ' + appcode)
+request.add_header('Content-Type', 'application/json; charset=UTF-8')
+ctx = ssl.create_default_context()
+ctx.check_hostname = False
+ctx.verify_mode = ssl.CERT_NONE
+response = urllib2.urlopen(request, context=ctx)
+content = response.read()
+if (content):
+    print(content)
+============================================
+#python3
+import urllib.request
+import urllib.parse
+import json
+import time
+import base64
+with open('1.jpg', 'rb') as f:  # 以二进制读取本地图片
+    data = f.read()
+    encodestr = str(base64.b64encode(data),'utf-8')
+#请求头
+headers = {
+         'Authorization': 'APPCODE 你自己的AppCode',
+         'Content-Type': 'application/json; charset=UTF-8'
+    }
+def posturl(url,data={}):
+  try:
+    params=json.dumps(dict).encode(encoding='UTF8')
+    req = urllib.request.Request(url, params, headers)
+    r = urllib.request.urlopen(req)
+    html =r.read()
+    r.close();
+    return html.decode("utf8")
+  except urllib.error.HTTPError as e:
+      print(e.code)
+      print(e.read().decode("utf8"))
+  time.sleep(1)
+if __name__=="__main__":
+    url_request="https://ocrapi-advanced.taobao.com/ocrservice/advanced"
+    dict = {'img': encodestr}
+
+    html = posturl(url_request, data=dict)
+    print(html)
+
+#正常返回示例
+{
+  //唯一id，用于问题定位
+  "sid": "bfcb418f71fd057f11ea4e17b15688dc27f9d4c6a47a867a376f251706266353341da54c",
+  //算法版本
+  "prism_version": "1.0.6",
+  //识别的文字块的数量，prism_wordsInfo数组大小
+  "prism_wnum": 2,
+  //角度，
+  "angle": 范围：0-360,0表示向上，90表示向右，180表示向下，270度表示向左
+  //识别的文字的具体内容
+  "prism_wordsInfo": [
+    {
+      //文字块
+      "word": "2017",
+      //置信度
+      "prob": 99,
+      //文字块的位置，按照文字块四个角的坐标顺时针排列，分别为左上XY坐标、右上XY坐标、右下XY坐标、左下XY坐标
+      "pos": [
+        {
+          "x": 107,
+          "y": 203
+        },
+        {
+          "x": 247,
+          "y": 203
+        },
+        {
+          "x": 247,
+          "y": 213
+        },
+        {
+          "x": 107,
+          "y": 213
+        }
+      ],
+      //单字信息
+      "charInfo": [
+        {
+          //单字文字
+          "word": "2",
+          //单字置信度
+          "prob": 99,
+          //单字左上角横坐标
+          "x": 777,
+          //单字左上角纵坐标
+          "y": 2993,
+          //单字宽度
+          "w": 26,
+          //单字长度
+          "h": 30
+        },
+        {
+          "word": "0",
+          "prob": 99,
+          "x": 803,
+          "y": 2989,
+          "w": 32,
+          "h": 37
+        },
+        {
+          "word": "1",
+          "prob": 99,
+          "x": 835,
+          "y": 2989,
+          "w": 38,
+          "h": 39
+        },
+        {
+          "word": "7",
+          "prob": 99,
+          "x": 873,
+          "y": 2988,
+          "w": 38,
+          "h": 40
+        }
+      ],
+      //如果该文字块在表格内则存在该字段，tableId表示表格的id
+      "tableId": 0,
+      //如果该文字块在表格内则存在该字段，表示表格中单元格的id
+      "tableCellId": 0
+    }
+  ],
+  //表格信息，如果不存在表格，则改字段内容为空
+  "prism_tablesInfo": [
+    {
+      //表格id，和prism_wordsInfo信息中的tableId对应
+      "tableId": 0,
+      //表格中横坐标单元格的数量
+      "xCellSize": 1,
+      //表格中纵坐标单元格的数量
+      "yCellSize": 1,
+      //单元格信息，包含单元格在整个表格中的空间拓扑关系
+      "cellInfos": [
+        {
+          //表格中单元格id，和prism_wordsInfo信息中的tableCellId对应
+          "tableCellId": 0,
+          //单元格中的文字
+          "word": "：2017",
+          //xStartCell缩写，表示横轴方向该单元格起始在第几个单元格，第一个单元格值为0
+          "xsc": 0,
+          //xEndCell缩写，表示横轴方向该单元格结束在第几个单元格，第一个单元格值为0，如果xsc和xec都为0说明该文字在横轴方向占据了一个单元格并且在第一个单元格内
+          "xec": 0,
+          //yStartCell缩写，表示纵轴方向该单元格起始在第几个单元格，第一个单元格值为0
+          "ysc": 0,
+          //yEndCell缩写，表示纵轴方向该单元格结束在第几个单元格，第一个单元格值为0
+          "yec": 0,
+          //单元格位置，按照单元格四个角的坐标顺时针排列，分别为左上XY坐标、右上XY坐标、右下XY坐标、左下XY坐标
+          "pos": [
+            {
+              "x": 107,
+              "y": 203
+            },
+            {
+              "x": 247,
+              "y": 203
+            },
+            {
+              "x": 247,
+              "y": 213
+            },
+            {
+              "x": 107,
+              "y": 213
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
