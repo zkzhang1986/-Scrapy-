@@ -1,6 +1,8 @@
-# 11.2 在 Scrapy 中使用 Splash
+# 11 爬取动态页面
+## 11.2 在 Scrapy 中使用 Splash
+## 11.3 项目实战：爬取toscrape中的名言
 
-## 配置 settings.py
+##### 配置 settings.py
 
     # Splash 服务器地址
     SPLASH_URL = 'http://192.168.99.100:8050'
@@ -24,3 +26,11 @@
         'scrapy_splash.SplashMiddleware':725,
         'scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware':810
     }
+    
+## 11.4 项目实战：爬取京东商城中的书籍信息
+    涉及点：JavaScript、jQuery以及 console 调试 
+    用 execute 端点爬取
+    settings.py
+    # 伪装成常规浏览器
+    USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) ' \
+             'Chrome/78.0.3904.108 Safari/537.36'
