@@ -1,7 +1,6 @@
 # 《精通scrapy网络爬虫》 
-  -example文件夹内容： 第一章至第七章代码
-  
-  practise文件夹内容：书本中的练习
+  -example文件夹内容： 第一章至第七章代码 
+  -practise文件夹内容：书本中的练习
 
   toscrape_book 文件夹内容：第八章 代码（ps在原代码基础增加了：去掉重复、以xls格式导出，选择器用的是css）
 
