@@ -1,17 +1,18 @@
 # 《精通scrapy网络爬虫》 
   -example文件夹内容： 第一章至第七章代码 
+  
   -practise文件夹内容：书本中的练习
 
-  toscrape_book 文件夹内容：第八章 代码（ps在原代码基础增加了：去掉重复、以xls格式导出，选择器用的是css）
+  -toscrape_book 文件夹内容：第八章 代码（ps在原代码基础增加了：去掉重复、以xls格式导出，选择器用的是css）
 
-  matplotlib_examples 文件夹内容 ：第九章 案例中下载matplotlib网站文件
+  -matplotlib_examples 文件夹内容 ：第九章 案例中下载matplotlib网站文件
 
-  so_image 文件夹内容：第9章 第二节 下载360图片 （为什么只下载到第一页呢？？？没实现翻页）
+  -so_image 文件夹内容：第9章 第二节 下载360图片 （为什么只下载到第一页呢？？？没实现翻页）
 
-  scrapy_10 文件夹内容：第10章 代码
-  browse_cookie 文件夹内容 :第10章 第4节 内容
+  -scrapy_10 文件夹内容：第10章 代码
+  -browse_cookie 文件夹内容 :第10章 第4节 内容
   
-  splash_example 文件夹内容：第11章 代码 分别是项目实战：爬取toscrape中的名人名言 、爬取京东商城中的书籍信息
+  -splash_example 文件夹内容：第11章 代码 分别是项目实战：爬取toscrape中的名人名言 、爬取京东商城中的书籍信息
   
   
 
