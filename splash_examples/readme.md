@@ -1,4 +1,9 @@
 # 11 爬取动态页面
+    安装  在docker中安装 splash
+    运行：$ docker pull scrapinghub/splash
+    运行： 在docker中运行 splash
+    运行：$ docker run -p 8050:8050 scrapinghub/splash
+    
 ## 11.2 在 Scrapy 中使用 Splash
 ## 11.3 项目实战：爬取toscrape中的名言
 
