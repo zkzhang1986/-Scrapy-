@@ -1,0 +1,19 @@
+# 打开数据存放路径
+# 创建数据库
+D:\sqlite\sqliteData>sqlite3 scrapy.db
+SQLite version 3.31.1 2020-01-27 19:55:54
+Enter ".help" for usage hints.
+
+# 创建表
+sqlite> create table books (
+   ...> upc char(16) not null primary key,
+   ...> name varchar(256) not null,
+   ...> price varchar(16) not null,
+   ...> review_rating int,
+   ...> review_num int,
+   ...> stock int
+   ...> );
+
+sqlite> select * from books;
+
+sqlite>
