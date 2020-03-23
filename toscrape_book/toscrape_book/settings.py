@@ -14,6 +14,14 @@ BOT_NAME = 'toscrape_book'
 SPIDER_MODULES = ['toscrape_book.spiders']
 NEWSPIDER_MODULE = 'toscrape_book.spiders'
 
+# MYSQL数据库信息设置 2020-03-23
+MYSQL_DB_NAME = 'scrapy_db'
+MYSQL_HOST = 'localhost'
+MYSQL_USER = 'root'
+MYSQL_PASSWORD = 'Zhangzk123'
+
+# SQLite数据库路径 2020-03-17
+SQLITE_DB_NAME = 'D:\sqlite\sqliteData\scrapy.db'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'toscrape_book (+http://www.yourdomain.com)'
@@ -67,7 +75,11 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
   # 'toscrape_book.pipelines.ToscrapeBookPipeline': 300,
     'toscrape_book.pipelines.BookPipeline': 310,
-    'toscrape_book.pipelines.DuplicatesPipline': 300
+    'toscrape_book.pipelines.DuplicatesPipline': 300,
+    # 把数据储存在 SQLite 数据库中 2020-03-17
+    # 'toscrape_book.pipelines.SQLitePipeline':400,
+    # 把数据储存在 MYSQL 数据库中 2020-03-23
+    'toscrape_book.pipelines.MySQLPipeline':401
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
