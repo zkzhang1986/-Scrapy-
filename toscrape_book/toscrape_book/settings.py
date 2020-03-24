@@ -79,7 +79,9 @@ ITEM_PIPELINES = {
     # 把数据储存在 SQLite 数据库中 2020-03-17
     # 'toscrape_book.pipelines.SQLitePipeline':400,
     # 把数据储存在 MYSQL 数据库中 2020-03-23
-    'toscrape_book.pipelines.MySQLPipeline':401
+    # 'toscrape_book.pipelines.MySQLPipeline':401,
+    # 把数据储存在 MYSQL 数据库中 2020-03-24 用异步方法
+    'toscrape_book.pipelines.MysqlAsyncPipeline':402,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

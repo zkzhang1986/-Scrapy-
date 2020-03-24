@@ -10,6 +10,48 @@ class ToscrapeBookPipeline(object):
     def process_item(self, item, spider):
         return item
 
+# 2020-03-24
+# 第12章 12.2 MYSQL 实现数据写入到 MYSQL 数据库中
+# 在 pipleines.py 中实现 MySQLPipeline（第二版） 采用 twisted 异步写入，代码如下：
+
+from twisted.enterprise import adbapi
+class MysqlAsyncPipeline:
+    def open_spider(self,spider):
+        db = spider.settings.get('MYSQL_DB_NAME', 'scrapy_default')
+        host = spider.settings.get('MYSQL_HOST', 'localhost')
+        port = spider.settings.get('MYSQL_PORT', 3306)
+        user = spider.settings.get('MYSQL_USER', 'root')
+        password = spider.settings.get('MYSQL_PASSWORD', 'Zhangzk123')
+        # 建立数据库连接
+        # adbapi.ConnectionPool 方法可以创建一个数据库连接池对象，其中包含多个连接对象，每个连接对象在独立的线程工作。
+        # adbapi 只是提供了异步访问数据库的编程框架，在其内部依然使用MySQLdb，sqlite3 这样的库访问。
+        # ConnectionPool 方法第1个参数就是用来指定使用哪个库访问数据。其他参数在创建连接对象时使用。
+        self.dbpool = adbapi.ConnectionPool('MySQLdb',host=host,db=db,
+                                            user=user,password=password)
+
+    def close_spider(self,spider):
+        self.dbpool.close()
+
+    def process_item(self,item,spider):
+        # dbpool.runInteraction(insert_db,item) 以异步方式调用 insert_db 函数，dbpool 会选择连接池中的一个连接对象在独立线程中
+        # 调用 insert_db，其中 参数 item 会被传给 insert_db 的第二个参数，传给 insert_db 的第一个参数是一个 Transaction 对象，
+        # 其接口 与 Cursor 对象类似，可以调用 execute 方法 执行 SQL 语句，insert_db 执行完后，连接对象会自动调用 commit 方法
+        self.dbpool.runInteraction(self.insert_db,item)
+        return item
+
+    def insert_db(self,tx,item):
+        values=(
+            item['upc'],
+            item['name'],
+            item['price'],
+            item['review_rating'],
+            item['review_num'],
+            item['stock'],
+        )
+        sql = 'INSERT INTO books VALUES(%s,%s,%s,%s,%s,%s)'
+        tx.execute(sql,values)
+
+
 # 2020-03-23
 # 第12章 12.2 MYSQL 实现数据写入到 MYSQL 数据库中
 # 在 pipleines.py 中实现 MySQLPipeline 代码如下：
