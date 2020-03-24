@@ -45,6 +45,8 @@ cd toscrape_book\spiders
     大项目感觉pymysql还是有点鸡肋啊，在此建议，使用MySQLdb。
     https://blog.csdn.net/u011510825/article/details/86632598
     
+    adbapi.py 为异步测试
+    
     
 ## 12.3 MongoDB
     
