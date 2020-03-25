@@ -20,3 +20,5 @@ class BookItem(scrapy.Item):
     review_num = scrapy.Field() # 评价数量
     upc = scrapy.Field() # 产品编码
     stock = scrapy.Field() # 库存数量
+    # 当存储在 mongodb 数据库中时，需要加上这么一句
+    _id = scrapy.Field()

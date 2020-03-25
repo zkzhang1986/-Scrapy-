@@ -10,6 +10,65 @@ class ToscrapeBookPipeline(object):
     def process_item(self, item, spider):
         return item
 
+# 2020-03-25
+# 第12章 12.4 Redis 实现数据写入到 Redis 数据库中
+# 在 pipleines.py 中实现 RedisPipeline 代码如下：
+import redis
+class RedisPipeline:
+    def open_spider(self,spider):
+        db_host = spider.settings.get('REDIS_HOST','localhost')
+        db_port = spider.settings.get('PEDIS_PORT',6379)
+        db_index = spider.settings.get('REDIS_DB_INDEX',0)
+
+        self.db_conn = redis.StrictRedis(host=db_host,port=db_port,db=db_index)
+        self.item_i = 0
+
+    def close_spider(self,spider):
+        self.db_conn.connection_pool.disconnect()
+
+    def process_item(self,item,spider):
+        self.insert_db(item)
+        return item
+
+    def insert_db(self,item):
+        if isinstance(item,type(item)):
+            item = dict(item)
+
+        self.item_i +=1
+        self.db_conn.hmset('book:%s' % self.item_i,item)
+
+# 2020-03-24
+# 第12章 12.3 MongoDB 实现数据写入到 MongoDB 数据库中
+# 在 pipleines.py 中实现 MongoDBPipeline 代码如下：
+
+from pymongo import MongoClient
+class MongoDBPipeline:
+    # open_spider 方法在开始爬取数据之前被调用，在该方法中通过spider.settings 对象读取用户在配置文件中的指定的数据库，
+    # 然后建立与数据库连接，将得到的 MongoClient 对象和 Database 对象，分别赋值给 self.db_client 和 self.db 以便后用
+    def open_spider(self,spider):
+        db_uri = spider.settings.get('MONGODB_URI','mongodb://localhost:27017')
+        db_name = spider.settings.get('MONGODB_DB_NAME','scrapy_default')
+
+        self.db_client = MongoClient('mongodb://localhost:27017')
+        self.db = self.db_client[db_name]
+
+    # close_spider 方法，爬取数据后，关闭连接
+    def close_spider(self,spider):
+        self.db_client.close()
+
+    # process_item 方法处理爬取到的每一项数据，在该方法中调用 insert_db 方法，执行数据库的插入操作。
+    # 在 insert_db 方法中，先将一项数据转成字典，然后调用 insert_one 方法将其插入集合 books。
+    def process_item(self,item,spider):
+        self.insert_db(item)
+        return item
+
+    def insert_db(self,item):
+        #  isinstance 类型判断函数 （判断 item 是否是item对象类型）
+        if isinstance(item,type(item)):
+            item = dict(item)
+
+        self.db.books.insert_one(item)
+
 # 2020-03-24
 # 第12章 12.2 MYSQL 实现数据写入到 MYSQL 数据库中
 # 在 pipleines.py 中实现 MySQLPipeline（第二版） 采用 twisted 异步写入，代码如下：

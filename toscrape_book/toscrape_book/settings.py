@@ -14,6 +14,15 @@ BOT_NAME = 'toscrape_book'
 SPIDER_MODULES = ['toscrape_book.spiders']
 NEWSPIDER_MODULE = 'toscrape_book.spiders'
 
+# Redis 数据库信息设置 2020-03-25
+REDIS_HOST = 'localhost'
+PEDIS_PORT = 6379
+REDIS_DB_INDEX = 0
+
+# Mongodb 数据库信息设置 2020-03-24
+MONGODB_URI = 'mongodb://localhost:27017'
+MONGODB_DB_NAME = 'scrapy_db'
+
 # MYSQL数据库信息设置 2020-03-23
 MYSQL_DB_NAME = 'scrapy_db'
 MYSQL_HOST = 'localhost'
@@ -81,7 +90,11 @@ ITEM_PIPELINES = {
     # 把数据储存在 MYSQL 数据库中 2020-03-23
     # 'toscrape_book.pipelines.MySQLPipeline':401,
     # 把数据储存在 MYSQL 数据库中 2020-03-24 用异步方法
-    'toscrape_book.pipelines.MysqlAsyncPipeline':402,
+    # 'toscrape_book.pipelines.MysqlAsyncPipeline':402,
+    # 把数据存储在 mongodb 数据库中 2020-03-24
+    # 'toscrape_book.pipelines.MongoDBPipeline':403,
+    # 把数据存储在 Redis 数据库中 2020-03-25
+    'toscrape_book.pipelines.RedisPipeline':404,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
