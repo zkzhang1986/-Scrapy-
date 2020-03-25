@@ -51,10 +51,30 @@ cd toscrape_book\spiders
 ## 12.3 MongoDB
     见代码
     class MongoDBPipeline 类
+    注意：
+    1.item.py
+    需要加上：_id = scrapy.Field()
+    如果不加会包 keys error
+    2.isinstance() 
+    函数来判断一个对象是否是一个已知的类型，类似 type()
+    语法：
+    isinstance(object, classinfo)
+    参数：
+    object -- 实例对象。
+    classinfo -- 可以是直接或间接类名、基本类型或者由它们组成的元组。
+    返回值：
+    如果对象的类型与参数二的类型（classinfo）相同则返回 True，否则返回 False。。
+    在 insert_db() 方法中，判断类型写法如下：
+    if isinstance(item,type(item)):
+        pass
+     书中是 if isinstance(item,item) 
+     会报 TypeError: isinstance() arg 2 must be a type or tuple of types
+    
     
 ## 12.4 Redis
     见代码
     class RedisPipeline 类
+    跟 Mongodb 写法差不多。
     
     
     
