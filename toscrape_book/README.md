@@ -36,7 +36,7 @@ cd toscrape_book\spiders
     2. PyMySQL的代码人员methane说mysqlclient速度更快及PyMySQL的应用场景
     那么，我们应该如何选择呢？首先，需要了解下这两个包的大概。
     一、pymysql
-      1）纯Python实现的，安装简单（直接pip安装）
+      1） 纯Python实现的，安装简单（直接pip安装）
       2)  由于纯Python实现的，可以很好的跟gevent框架结合
     二、mysqlclient
     1）是一个C扩展模块,编译安装可能会导致报各种错误,明显没有pymysql方便
@@ -49,6 +49,12 @@ cd toscrape_book\spiders
     
     
 ## 12.3 MongoDB
+    见代码
+    class MongoDBPipeline 类
+    
+## 12.4 Redis
+    见代码
+    class RedisPipeline 类
     
     
     
