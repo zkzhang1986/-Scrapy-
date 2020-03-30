@@ -17,6 +17,8 @@
   
   toscrape_book  文件夹内容：第八章 代码 包含 第 12 章 数据存储代码（里面还有个异步存储数据的小例子。）
   
+  proxy_example  文件夹内容：第13章 使用 HTTP 代理  代码 
+  
   
 
 1.spiders 蜘蛛
