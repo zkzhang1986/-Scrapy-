@@ -24,6 +24,8 @@ class BooksSpider(scrapy.Spider):
             book['price'] = sel.css('p.price_color::text').extract_first()
             yield book
 
+        # 第 1 章 1.3.4 实现 Spider
+        # 以下代码值直接保存，没有通过 Item 封装数据
         # for book in response.css('article.product_pod'):
             # name = book.xpath('./h3/a/@title').extract_first()
             # price = book.css('p.price_color::text').extract_first()
@@ -32,7 +34,8 @@ class BooksSpider(scrapy.Spider):
             #     'price': price
             # }
 
-        # 提取下一页链接
+        # 第 1 章 1.3.4 实现 Spider
+        # 直接提取下一页链接 （没有用 LinkExtractor 提取链接）
         # 下一页链接在 ul.pager > li.next > a 里
         '''
         <ul class="pager">          
@@ -46,6 +49,7 @@ class BooksSpider(scrapy.Spider):
         #     next_url = response.urljoin(next_url)
         #     yield scrapy.Request(next_url, callback=self.parse)
 
+        # 第6章 使用 LinkExtractor 提取链接
         # 提取下一页链接重写（用 LinkExtractor提取）
         # 说明 from scrapy.linkextractors import LinkExtractor
         le = LinkExtractor(restrict_css='ul.pager li.next')
