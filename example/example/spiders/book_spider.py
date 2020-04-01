@@ -4,16 +4,17 @@ from scrapy.linkextractors import LinkExtractor
 class BooksSpider(scrapy.Spider):
     # 爬虫名，每一个爬虫的唯一标识
     name = 'books'
+    # 第 1 章 1.3.4 实现 Spider
     # 定义爬虫爬取的起始点，起始点可以是多个，这里只有一个。
     #start_urls = ['http://books.toscrape.com/']
 
+    # 第 2 章 2.3.3 设定起始爬取点
     # 实现 start_resquests 方法代替start_urls类属性
     def start_requests(self):
         yield scrapy.Request('http://books.toscrape.com/',
                              callback=self.parse,
                              headers={'User-Agent':'Mozill/5.0'},
                              dont_filter=True)
-
 
     def parse(self, response):
         # 提取数据
@@ -42,7 +43,7 @@ class BooksSpider(scrapy.Spider):
             <li class="current"> Page 1 of 50 </li>           
             <li class="next"><a href="catalogue/page-2.html">next</a></li>            
         </ul>
-		#default > div > div > div > div > section > div:nth-child(2) > div > ul.pager > li.next > a
+        #default > div > div > div > div > section > div:nth-child(2) > div > ul.pager > li.next > a
         '''
         # next_url = response.css('ul.pager li.next a::attr(href)').extract_first()
         # if next_url:
@@ -59,4 +60,3 @@ class BooksSpider(scrapy.Spider):
             # 用links[0]获取的Link对象属性是绝对链接地址，无需要用response.urljoin拼接
             next_url = links[0].url
             yield scrapy.Request(next_url, callback=self.parse)
-
