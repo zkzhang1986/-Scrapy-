@@ -9,6 +9,6 @@ class ExampleItem(scrapy.Item):
 if __name__ == '__main__':
     e = ExampleItem(x=100,y=200)
     print(type(e.fields),e.fields)
-    print(type(e.fields['x']))
-    print(type(e.fields['y']))
+    print(type(e.fields['x']),e.fields['x'])
+    print(type(e.fields['y']),e.fields['y'])
     print(issubclass(scrapy.Field,dict ))
