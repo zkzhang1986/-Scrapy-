@@ -2,8 +2,8 @@
 # 使用LinkExtract 提取链接及参数介绍
 from scrapy.http import HtmlResponse
 from scrapy.linkextractors import LinkExtractor
-html1 = open('scrapyLinkExtractorTest1.html','r',encoding='utf-8').read()
-html2 = open('scrapyLinkExtractorTest2.html','r',encoding='utf-8').read()
+html1 = open('scrapyLinkExtractorTest1.html', 'r', encoding='utf-8').read()
+html2 = open('scrapyLinkExtractorTest2.html', 'r', encoding='utf-8').read()
 response1 = HtmlResponse(url='http://example1.com',body=html1,encoding='utf8')
 response2 = HtmlResponse(url='http://example2.com',body=html2,encoding='utf8')
 # print(response1,response2)
