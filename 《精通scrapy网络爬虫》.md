@@ -106,6 +106,24 @@
     可以直接使用 Response 对象内置的 Selector 对象
     response.selector
 ### 3.3 XPath --重点
+    Xpath 即 XML 路径语言
+    3.3.1 基础语法
+    https://blog.csdn.net/u010553139/article/details/104006117
+    实例代码：https://github.com/zkzhang1986/-Scrapy-/blob/master/practise/scrapySelectorXpathTest.py
+    表达式	    描述
+    /	        选中文档的根（root）
+    .	        选中当前节点
+    ..	        选中当前节点的父节点
+    ELEMENT	    选中子节点中所有ELEMENT元素节点
+    //ELEMENT	选中后代节点中所ELEMENT元素节点
+    *	        选中所有元素子节点
+    text()	    选中所文本子节点
+    @ATTR	    选中名为ATTR的属性节点
+    @*	        选中所有属性节点
+    [谓语]	    谓语用来查找特定的节点或者包含某个特定值的节点
+    3.3.2 常用函数
+    string(arg):返回参数的字符串值
+    contaions(str1,str2):判断 str1 中是否包含 str2 ，返回布尔值
 ### 3.4 CSS选择器 --重点
 ### 3.5 本章小结
     略
