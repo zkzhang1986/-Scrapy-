@@ -24,18 +24,25 @@ body = '''
 response = HtmlResponse(url='http://www.example.com/', body=body, encoding='utf-8')
 
 # E:选中E元素
+print('[1]==========E:选中E元素==========')
 print(response.css('img')) # 等同于 print(response.xpath('//img'))
 # E1,E2:选中E1和E2元素
+print('[2]==========E1,E2:选中E1和E2元素==========')
 print(response.css('base,title'))
 # E1 E2:选中E1后代中E2元素
+print('[3]==========E1 E2:选中E1后代中E2元素==========')
 print(response.css('div img')) # 等同 print(response.xpath('//div//img'))
 # E1>E2:选中E1元素中的E2元素
+print('[4]==========E1>E2:选中E1元素中的E2元素==========')
 print(response.css('body>div'))
 # [ATTR]:选中包含ATTR属性的元素
+print('[5]==========[ATTR]:选中包含ATTR属性的元素==========')
 print(response.css('[style]')) # print(response.xpath('//div/@style'))
 # [ATTR=VALUE]:选中包含ATTR属性且值为VALUE的元素
+print('[6]==========[ATTR=VALUE]:选中包含ATTR属性且值为VALUE的元素==========')
 print(response.css('[id="images-1"]')) # print(response.xpath('//div[@id="images-1"]'))
 # E:nth-child(n):选中E元素，且该元素必须是其父元素的第n个子元素
+print('[7]==========E:nth-child(n):选中E元素，且该元素必须是其父元素的第n个子元素==========')
 # 选中每个div的第一个
 print(response.css('div>a:nth-child(1)'))
 # 选中第二个div的第一个
@@ -45,4 +52,5 @@ print(response.css('div:nth-child(2)>a:nth-child(1)'))
 print(response.css('div:first-child>a:first-child'))
 print(response.css('div:last-child>a:last-child'))
 # E::text:选中E元素的文本节点
+print('[8]==========E::text:选中E元素的文本节点==========')
 print(response.css('a::text').extract()) # print(response.xpath('//a/text()').extract())
