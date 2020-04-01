@@ -36,7 +36,7 @@ class BooksSpider(scrapy.Spider):
             # }
 
         # 第 1 章 1.3.4 实现 Spider
-        # 直接提取下一页链接 （没有用 LinkExtractor 提取链接）
+        # 直接用 Selector 提取下一页链接 （没有用 LinkExtractor 提取链接）
         # 下一页链接在 ul.pager > li.next > a 里
         '''
         <ul class="pager">          
