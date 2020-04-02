@@ -18,4 +18,3 @@ scrapy shell [url|file] -测试
 帮助
 scrapy -h
 Use "scrapy <command> -h" to see more info about a command
-
