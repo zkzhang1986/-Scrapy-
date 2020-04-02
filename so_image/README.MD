@@ -83,5 +83,3 @@ IMAGES_STORE = 'download_images'
     
     # allowed_domains = ['images.so.com']
 
-
-
