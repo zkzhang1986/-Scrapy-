@@ -32,13 +32,13 @@ IMAGES_MIN_HEIGHT = 110 # 最小高度
 
 应该用https://matplotlib.org/examples/index.html 这个url
 
-提取每个例子链接
-链接:每个例子的链接 < a class="reference internal" href="images_contours_and_fields/affine_image.html#sphx-glr-gallery-images-contours-and-fields-affine-image-py"><span class="std std-ref">Affine transform of an image</span></a>
-可以用 LinkExtractor 提取 
-from scrapy.linkextractors import LinkExtractor
- le = LinkExtractor(restrict_css='a.reference')
- links = le.extract_links(response)
- [link.url for link in links]
+	提取每个例子链接
+	链接:每个例子的链接 < a class="reference internal" href="images_contours_and_fields/affine_image.html#sphx-glr-gallery-images-contours-and-fields-affine-image-py"><span class="std std-ref">Affine transform of an image</span></a>
+	可以用 LinkExtractor 提取 
+	from scrapy.linkextractors import LinkExtractor
+	 le = LinkExtractor(restrict_css='a.reference')
+	 links = le.extract_links(response)
+	 [link.url for link in links]
 
 feth(url) #crapy shell 分析中的回调函数，把url录入可以回调。
 
