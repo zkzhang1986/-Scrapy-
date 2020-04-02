@@ -76,6 +76,3 @@ cd toscrape_book\spiders
     class RedisPipeline 类
     跟 Mongodb 写法差不多。
     
-    
-    
-    
