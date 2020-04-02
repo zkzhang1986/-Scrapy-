@@ -17,6 +17,7 @@ NEWSPIDER_MODULE = 'example.spiders'
 MONGO_DB_URI = 'mongodb://localhost:27017/'
 MONGO_DB_NAME = 'scrapy_data1'
 
+# 第 7 章  7.2 实现 Excel 格式导出
 # 添加新的导出数据格式
 FEED_EXPORTERS = {'xls':'example.my_exporters.ExcelItemExporter'}
 
@@ -24,7 +25,7 @@ FEED_EXPORTERS = {'xls':'example.my_exporters.ExcelItemExporter'}
 #USER_AGENT = 'example (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS = 32
@@ -78,7 +79,7 @@ ITEM_PIPELINES = {
     # 把数据保存到MongoDB
     # 'example.pipelines.MongoDBPipeline':303,
     # 把数据保存到MongoDB 用from_crawler 函数设置
-    # 'example.pipelines.MongoDBPipeline1': 304,
+    'example.pipelines.MongoDBPipeline1': 304,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
