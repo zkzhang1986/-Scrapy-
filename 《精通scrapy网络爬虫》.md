@@ -351,14 +351,184 @@
 
 ## 第 9 章 下载文件和图片
 ### 9.1 FilesPipeline 和 ImagesPipeline
-    
+    9.1.1 FilesPipeline 使用说明
+        文件下载器：FilesPipeline 
+         步骤：
+         1.settings.py 中启用 FilesPipeline，通常将其置于其他 Item Pipeline之前，如
+            ITEM_PIPELINES = {'scrapy.pipelines.files.FilesPipeline':1,}
+         2. settings.py 使用 FILES_STORE 指定文件下载目录，如
+            FILES_STORE = 'examples_src'
+         3. 在 Pipeline 中写文件下载器
+            在 Spider 解释一个包含文件下载链接的页面时，将所有需要下载文件的 url 地址收集到一个列表，赋给 item 的 file_url字段
+            （item['file_urls']）.FilesPipeline 在处理每一项 item 时，会读取 item['file_urls'],对其中每一个url进行下载；
+            class DownloadBookSpider(scrapy.Spider):
+                ...
+                def parse(response):
+                    item = {}
+                    # 下载列表
+                    item['fiel_urls'] = []
+                    for url in response.xpath('//a/@href').extract():
+                        download_url = response.urljoin(url)
+                        # 将 url 填入下载列表
+                        item['file_urls'].append(download_url)
+                    yiedl item
+    9.1.2 ImagesPipeline 使用说明
+        图片下载器：ImagesPipeline 
+        ImagesPipeline 和 FielsPipeline
+                    FielsPipeline               ImagesPipeline
+        导入路径：scrapy.pipelines.file.Files  |  scrapy.pipelines.images.ImagesPipeline
+        Item字段：file_urls,files             |  image_urls,images
+        下载目录：FILES_STORE                  |  IMAGES_STORE
+        ImagesPipeline 特有功能
+        1.为图片生成缩略图：settings.py 设置  IMAGES_THUMBS,它是一个字典，每一项的值都是缩略图的尺寸，代码如下：
+            IMAGES_THUMBS = {
+                'small':(50,50),
+                'big':(270,270)
+            }
+            开启后，下载一张图片时，本地会出现3张图片，1张原图，2张缩略图
+        2. 过滤尺寸过小的图片：settings.py 设置 IMAGES_MIN_WIDTH 和 IMAGES_MIN_HEIGHI，它们分别指定图片最小宽和高，代码如下：
+            IMAGES_MIN_WIDTH = 11O
+            IMAGE_MIN_HEIGHI = 110
 ### 9.2 项目实例：爬取 matplotlib例子源码文件
+    9.2.1 需求：
+        下载 http://matplotlib.org网站中所有例子的源码文件到本地
+    9.2.2 页面分析：
+    9.2.3 编码实现 
+        代码见：https://github.com/zkzhang1986/-Scrapy-/tree/master/matplotlib_examples
 ### 9.3 项目实例：下载 360 图片
+        代码见：https://github.com/zkzhang1986/-Scrapy-/tree/master/so_image
 ### 9.4 本章小结
     略
 
 ## 第 10 章 模拟登录
 ### 10.1 登录实质
+    测试网站：http://example.webscraping.com/places/default/user/login
+    登录网站后按 F12 打开开发者工具。选择 Elements 点击 form 表单
+    代码如下：
+    <div id="web2py_user_form">
+     <form action="#" enctype="application/x-www-form-urlencoded" method="post">
+      <table>
+       <tbody>
+        <tr id="auth_user_email__row">
+         <td class="w2p_fl">
+          <label class="" for="auth_user_email" id="auth_user_email__label">
+           电子邮件:
+          </label>
+         </td>
+         <td class="w2p_fw">
+          <input class="string" id="auth_user_email" name="email" type="text" value=""/>
+         </td>
+         <td class="w2p_fc">
+         </td>
+        </tr>
+        <tr id="auth_user_password__row">
+         <td class="w2p_fl">
+          <label class="" for="auth_user_password" id="auth_user_password__label">
+           密码:
+          </label>
+         </td>
+         <td class="w2p_fw">
+          <input class="password" id="auth_user_password" name="password" type="password" value=""/>
+         </td>
+         <td class="w2p_fc">
+         </td>
+        </tr>
+        <tr id="auth_user_remember_me__row">
+         <td class="w2p_fl">
+          <label class="" for="auth_user_remember_me" id="auth_user_remember_me__label">
+           记住我(30 天):
+          </label>
+         </td>
+         <td class="w2p_fw">
+          <input class="boolean" id="auth_user_remember_me" name="remember_me" type="checkbox" value="on"/>
+         </td>
+         <td class="w2p_fc">
+         </td>
+        </tr>
+        <tr id="submit_record__row">
+         <td class="w2p_fl">
+         </td>
+         <td class="w2p_fw">
+          <input class="btn" type="submit" value="Log In"/>
+          <button class="btn w2p-form-button" onclick="window.location='/places/default/user/register?_next=%2Fplaces%2Fdefault%2Findex';return false">
+           注册
+          </button>
+         </td>
+         <td class="w2p_fc">
+         </td>
+        </tr>
+       </tbody>
+      </table>
+      <div style="display:none;">
+       <input name="_next" type="hidden" value="/places/default/index"/>
+       <input name="_formkey" type="hidden" value="70322c27-786e-4c62-b2d7-40a5dfdf903d"/>
+       <input name="_formname" type="hidden" value="login"/>
+      </div>
+     </form>
+    </div>
+    10.1.1 分析：
+    例：<form action="#" enctype="application/x-www-form-urlencoded" method="post"> 
+    <form>的 method 属性决定了 HTTP 请求的方法 (例为 POST)；
+    <form>的 action 属性决定了 HTTP 请求的 url (例为 # ，也就是当前页)；
+    <form>的 enctype 属性决定了表单数据的编码类型(例为 x-www-form-urlencoded)；
+    扩展阅读：post使用form-data和x-www-form-urlencoded的本质区别 https://blog.csdn.net/u013827143/article/details/86222486
+    
+    <from>中的<input>元素决定了表单数据的内容
+    例： <input class="string" id="auth_user_email" name="email" type="text" value=""/>
+    用户填写用户名
+    
+    <div style="display:none;">
+       <input name="_next" type="hidden" value="/places/default/index"/>
+       <input name="_formkey" type="hidden" value="70322c27-786e-4c62-b2d7-40a5dfdf903d"/>
+       <input name="_formname" type="hidden" value="login"/>
+      </div>
+     <div style="display:none">XXX</div> 说明：
+     在<div style="display:none">XXX</div>中的百XXX内容不显示度可以通过JS使改DIV的display属性变成block则这些知内容显示出来此效果用途很广，
+     道比如有的目录树，版比如论坛的回复查看内容等权等
+     
+     在<div style="display:none;">中包含了3个隐藏的 <input type="hidden">,它们的值在 value 属性中，虽然不需要用户填写，
+     但提交表单数据中缺少它们的话可能会导致登录验证失败，这些隐藏的<input>有其他用途，比如：
+     <input name="_next"> 用来告诉服务器，登录成功后跳转的地址。
+     例：/places/default/index 为 http://example.webscraping.com/places/default/index
+     <input name="_formkey">用来防止CSRT跨域攻击。
+    
+    10.1.2 登录：
+    填入账号、密码登录，点击 Log In 在 NetWork 中查看文件 （login）不同文件不同
+    Form Data (提交表单数据)
+    email: zk_zhang1986@sina.com
+    password: zzk123
+    _next: /places/default/index
+    _formkey: 51ee44dd-d8ed-4963-a58c-6e607db9f298
+    _formname: login
+    实际post提交是数据
+    email=zk_zhang1986%40sina.com&
+    password=zzk123&
+    _next=%2Fplaces%2Fdefault%2Findex&
+    _formkey=51ee44dd-d8ed-4963-a58c-6e607db9f298&
+    _formname=login
+    （主要是分析 Form Data 数据以及构造）
+    
+    General
+    Request URL: http://example.webscraping.com/places/default/user/login?_next=/places/default/index
+    Request Method: POST
+    Status Code: 303 SEE OTHER
+    Remote Address: 207.38.86.225:80
+    Referrer Policy: no-referrer-when-downgrade
+    
+    Response Headers
+    Connection: keep-alive
+    Content-Type: text/html; charset=UTF-8
+    Date: Thu, 14 May 2020 09:27:49 GMT
+    Location: /places/default/index
+    Server: nginx
+    Set-Cookie: session_id_places=True; httponly; Path=/
+    Set-Cookie: session_data_places="ea84dc38f8185037c6075091623fd836:gQzQdNRsYwkCwLT6Sp9K7zJHYgw20nU1TywjSVdWWK8XhtPGf6x55zzx3zgioeiCU0ViUvgF4GwY3PUjHUhXfbyf0tOEz3UXDTGxqockCHrdhX81pwytiAkNVkWQcCAN757tt8hsDWUwzjit9MVYrLatzLrM60sEzk5bf8t-OGLfJ-DxuBBrTXcfIS1JpaEBE-mtQ7aRh5DOJkIkXaPbyI7A5MIbKmbLxEJUebJjM_gGlueF50zqqzI7uzBKff5SOqlFf9sLTpC3QK-aALjbx33YgswSc22Xuqe1rSF6yUThBxRYSsay8IkDbZTv5Ex_Z3kHMTAsDuGEuwB8PKvUdPBR1McZgFOqj9r8gkx9yQZK8XVHfp3DvQOJzQoYJWkN8sNj5_LGrOsj6PDDRgAICL8zbZCmChybXWCMCV5QkTKnGyOpGt2PuYXaTjy85MaYFAIJZQ2DJFyX2MN5puCMMpwTHKf2MFPbn2Q8TYIvxUukfQlBHQ7pfax34M3bnuqMLqus4uo_hOSoI9D7AisBPVxj0xIH6Qgnchf3ZintvEMsy-8y0u7OdxJ_iP7A4LbPEK19eVWoTYkdQ212vmshuTYbRzFnCJCo8_SJbg9Ly5Pqu-pizugjA4lJ5DDH6-C5_itSFbaWgJ_zozszqgk6SS1X55V-FW3oOcdoD8Cxqo2otYjIoN9IZpxaiiy2gtnDxlqYbn3E1hkc37Qk8u4u4TkIRrjsFAFcrhJrx52gDps9KL3KwUoZq-39i4NKBzN8Lgh3wK00cUL1Q0Qga2WZj4ydgtbYt9BIH5SWe8V3z2edsZj1B3qkMtetx75POTPxXUu2eLnDcik5ipNHGu-NnGuNKzd-9Y0ZEM1-P79GHVlRPThRGnAoidBoJODVCdYkqQN-WWv2aKZkMkF1UdQo-QwXWZMXTlhcsP8OIkLlkDa2fMyV5yJsxDV-gJvMfcBKsFvr0yAm0TIT_1da4-Ix2aSLnSGG8HKHcp1MyYXEQUVbw-XCAd-l4GfqCsNqUDKX_rBuZ_s4ghOrtvoMMaOY4w=="; Path=/
+    Transfer-Encoding: chunked
+    登录成功后 Response Headers 中 Set_Cookies 字段就是网站服务器保存在客户端（浏览器）的 Cookie 信息，之后对该网站发送的其他 HTTP 请求
+    都会带上这个“身份证”（session信息），服务器程序通过这个“身份证”识别出发送请求的用户，从而决定响应怎样的页面。
+    另外响应状态码是303，代表页面重定向，浏览器会读取响应头部中的 Location 字段，依据其中描述的路径（本例为/places/default/index），
+    再次发送一个GET请求。
+    
 ### 10.2 Scrapy 模拟登录
 ### 10.3 识别验证码
 ### 10.4 Cookie登录
